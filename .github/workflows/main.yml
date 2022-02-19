@@ -12,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Config AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Install project node dependencies.
         run: npm install
       # - name: Run lint
@@ -20,5 +26,5 @@ jobs:
         run: npm run test
       - name: Run build
         run: npm run build
-      # - name: Run deploy
-      #   run: 
+      - name: Run deploy
+        run: aws s3 sync ./build/ s3://find-falcone --delete
