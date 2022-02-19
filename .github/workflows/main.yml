@@ -1,0 +1,27 @@
+name: main branch deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy-main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install project node dependencies.
+        run: npm install
+      # - name: Run lint
+      #   run: npm run lint
+      - name: Run test
+        run: npm run test
+      - name: Run build
+        run: npm run build
+      # - name: Run deploy
+      #   run: 
